@@ -7,6 +7,7 @@ const router = express.Router();
 // POST /user (with data => data.name, data.email, data.password)
 router.post("/", async (req, res, next) => {
 	try {
+		console.log(req.body);
 		const existedUser = await User.findOne({
 			where: {
 				email: req.body.email,
@@ -23,7 +24,7 @@ router.post("/", async (req, res, next) => {
 			nickname: req.body.nickname,
 			password: hashedPassword,
 		});
-		return res.status(201).json({ msg: "계정 생성 완료" });
+		return res.status(201).send('ok');
 	} catch (error) {
 		console.log(error);
 		next(error);
