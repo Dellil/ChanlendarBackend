@@ -1,12 +1,13 @@
 const express = require("express");
 
-const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+
 const db = require("./models");
 const dotenv = require("dotenv");
 
 const userRouter = require("./routes/user");
-
 
 dotenv.config();
 const app = express();
@@ -19,6 +20,12 @@ db.sequelize
 	.catch(console.log.error);
 
 // MIDDLEWARES
+app.use(
+	cors({
+		origin: "http://localhost:3000",
+		credentials: true,
+	}),
+);
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

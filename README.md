@@ -3,3 +3,8 @@
 -   Express
 -   Sequelize
 -   mysql
+
+CheckList
+- [ ] JWT
+- [ ] Topic
+- [ ] Task
