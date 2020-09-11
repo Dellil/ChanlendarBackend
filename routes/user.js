@@ -2,8 +2,14 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
-
 const router = express.Router();
+
+const { jwtVerify } = require("./middlewares");
+
+router.get("/", jwtVerify, (req, res, next) => {
+	console.log(req.userId);
+	res.send("섻ㅅ섻ㅅ보");
+});
 
 // POST /user (req.body as body => body.name, body.email, body.password)
 router.post("/", async (req, res, next) => {
@@ -51,25 +57,16 @@ router.post("/login", async (req, res, next) => {
 		if (err) {
 			console.log(err);
 		}
-		if (same) {
-			const accessToken = jwt.sign(
-				{ userId: user.id },
-				process.env.JWT_ACCESS,
-				{
-					expiresIn: "1day",
-				},
-			);
-			const refreshToken = jwt.sign(
-				{ userId: user.id },
-				process.env.JWT_REFRESH,
-				{
-					expiresIn: "30days",
-				},
-			);
-			res.status(200).json({ accessToken, refreshToken });
-		} else {
-			res.status(404).json({ message: "비밀번호가 틀렸습니다." });
+		if (!same) {
+			return res.status(404).json({ message: "비밀번호가 틀렸습니다." });
 		}
+		const accessToken = jwt.sign({ userId: user.id }, process.env.JWT_ACCESS, {
+			expiresIn: "1day",
+		});
+		const refreshToken = jwt.sign({ userId: user.id }, process.env.JWT_REFRESH, {
+			expiresIn: "30days",
+		});
+		res.status(200).json({ accessToken, refreshToken });
 	});
 });
 
