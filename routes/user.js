@@ -4,13 +4,6 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const router = express.Router();
 
-const { jwtVerify } = require("./middlewares");
-
-router.get("/", jwtVerify, (req, res, next) => {
-	console.log(req.userId);
-	res.send("섻ㅅ섻ㅅ보");
-});
-
 // POST /user (req.body as body => body.name, body.email, body.password)
 router.post("/", async (req, res, next) => {
 	try {
