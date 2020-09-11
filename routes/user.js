@@ -13,7 +13,7 @@ router.post("/", async (req, res, next) => {
 			},
 		});
 		if (existedUser) {
-			return res.status(403).send("이미 사용중인 아이디입니다.");
+			return res.status(403).json({ message: "이미 사용중인 아이디입니다." });
 		}
 
 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
 			nickname: req.body.nickname,
 			password: hashedPassword,
 		});
-		return res.status(201).send("ok");
+		return res.status(201).json({ message: "성공적으로 생성됐습니다." });
 	} catch (error) {
 		console.log(error);
 		next(error);

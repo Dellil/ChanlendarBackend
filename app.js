@@ -8,6 +8,7 @@ const db = require("./models");
 const dotenv = require("dotenv");
 
 const userRouter = require("./routes/user");
+const jwtRouter = require("./routes/jwt");
 
 dotenv.config();
 const app = express();
@@ -38,6 +39,8 @@ app.get("/", (req, res) => {
 
 // app.use("/topic")
 app.use("/user", userRouter);
+app.use("/jwt", jwtRouter);
+
 app.listen(3065, () => {
 	console.log("CHANLENDAR BACKEND IS COMPLETED RUNNING");
 });

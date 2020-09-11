@@ -7,8 +7,10 @@ const jwtVerify = (req, res, next) => {
 	jwt.verify(accessToken, process.env.JWT_ACCESS, (err, decoded) => {
 		if (err) {
 			return res.status(404).json({ message: err.message });
-        }
-        req.userId = decoded.userId;
+		}
+		req.user = {
+			id: decoded.userId,
+		};
 		next();
 	});
 };
