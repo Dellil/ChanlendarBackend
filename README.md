@@ -5,6 +5,7 @@
 -   mysql
 
 CheckList
-- [ ] JWT
-- [ ] Topic
-- [ ] Task
+
+-   [x] JWT
+-   [ ] Topic
+-   [ ] Task
