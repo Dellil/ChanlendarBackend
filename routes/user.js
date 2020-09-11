@@ -1,13 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
 const router = express.Router();
 
-// POST /user (with data => data.name, data.email, data.password)
+// POST /user (req.body as body => body.name, body.email, body.password)
 router.post("/", async (req, res, next) => {
 	try {
-		console.log(req.body);
 		const existedUser = await User.findOne({
 			where: {
 				email: req.body.email,
@@ -24,11 +24,53 @@ router.post("/", async (req, res, next) => {
 			nickname: req.body.nickname,
 			password: hashedPassword,
 		});
-		return res.status(201).send('ok');
+		return res.status(201).send("ok");
 	} catch (error) {
 		console.log(error);
 		next(error);
 	}
+});
+
+// POST /user/login (req.body as body => body.email, body.password)
+router.post("/login", async (req, res, next) => {
+	const { email, password } = req.body;
+	let user;
+	try {
+		user = await User.findOne({
+			where: {
+				email,
+			},
+		});
+	} catch (error) {
+		return res.status(404).json({ message: "DB 에러" });
+	}
+
+	if (!user) return res.status(404).json({ message: "없는 계정입니다." });
+
+	bcrypt.compare(password, user.password, async (err, same) => {
+		if (err) {
+			console.log(err);
+		}
+		if (same) {
+			const accessToken = jwt.sign(
+				{ userId: user.id },
+				process.env.JWT_ACCESS,
+				{
+					expiresIn: "1day",
+				},
+			);
+			const refreshToken = jwt.sign(
+				{ userId: user.id },
+				process.env.JWT_REFRESH,
+				{
+					expiresIn: "30days",
+				},
+			);
+			res.status(200).json({ accessToken, refreshToken });
+		} else {
+			res.status(404).json({ message: "비밀번호가 틀렸습니다." });
+		}
+	});
 });
 
 module.exports = router;
