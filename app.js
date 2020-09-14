@@ -8,7 +8,7 @@ const db = require("./models");
 const dotenv = require("dotenv");
 
 const userRouter = require("./routes/user");
-const topicRouter = require("./routes/topic");
+const topicRouter = require("./routes/topic/topic");
 const jwtRouter = require("./routes/jwt");
 
 dotenv.config();
