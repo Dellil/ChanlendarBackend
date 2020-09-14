@@ -5,7 +5,7 @@ const { jwtVerify } = require("../middlewares");
 const { Topic } = require("../../models");
 
 // PATCH /topic/1 (id, title)
-router.patch("/:id", jwtVerify, async (req, res) => {
+router.patch("/:id", jwtVerify, async (req, res, next) => {
 	const id = Number.parseInt(req.params.id, 10);
 	const title = req.body.title;
 
@@ -29,7 +29,7 @@ router.patch("/:id", jwtVerify, async (req, res) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
+		next(error);
 		res.status(500).json({ message: "can't return data" });
 	}
 });

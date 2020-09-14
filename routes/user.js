@@ -25,7 +25,6 @@ router.post("/", async (req, res, next) => {
 		});
 		res.status(201).json({ message: "성공적으로 생성됐습니다." });
 	} catch (error) {
-		console.log(error);
 		next(error);
 	}
 });
@@ -41,14 +40,15 @@ router.post("/login", async (req, res, next) => {
 			},
 		});
 	} catch (error) {
-		return res.status(404).json({ message: "DB 에러" });
+		next(error);
+		return res.status(500).json({ message: "can't return data" });
 	}
 
 	if (!user) return res.status(404).json({ message: "없는 계정입니다." });
 
 	bcrypt.compare(password, user.password, async (err, same) => {
 		if (err) {
-			console.log(err);
+			return next(err);
 		}
 		if (!same) {
 			return res.status(404).json({ message: "비밀번호가 틀렸습니다." });

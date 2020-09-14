@@ -22,7 +22,7 @@ router.post("/", jwtVerify, async (req, res, next) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
+		next(error);
 		res.status(500).json({ message: "can't return data" });
 	}
 });
