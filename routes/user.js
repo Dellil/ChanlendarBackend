@@ -23,7 +23,7 @@ router.post("/", async (req, res, next) => {
 			nickname: req.body.nickname,
 			password: hashedPassword,
 		});
-		return res.status(201).json({ message: "성공적으로 생성됐습니다." });
+		res.status(201).json({ message: "성공적으로 생성됐습니다." });
 	} catch (error) {
 		console.log(error);
 		next(error);
