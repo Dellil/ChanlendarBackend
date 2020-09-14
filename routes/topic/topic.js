@@ -8,7 +8,7 @@ const idRouter = require("./id");
 router.use("/", idRouter);
 
 // POST /topic (title)
-router.post("/", jwtVerify, async (req, res) => {
+router.post("/", jwtVerify, async (req, res, next) => {
 	try {
 		const topic = await Topic.create({
 			title: req.body.title,

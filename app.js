@@ -9,6 +9,7 @@ const dotenv = require("dotenv");
 
 const userRouter = require("./routes/user");
 const topicRouter = require("./routes/topic/topic");
+const topicsRouter = require("./routes/topic/topics");
 const jwtRouter = require("./routes/jwt");
 
 dotenv.config();
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 
 app.use("/user", userRouter);
 app.use("/topic", topicRouter);
+app.use("/topics", topicsRouter);
 app.use("/jwt", jwtRouter);
 
 app.listen(3065, () => {
