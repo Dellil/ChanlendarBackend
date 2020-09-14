@@ -59,7 +59,7 @@ router.post("/login", async (req, res, next) => {
 		const refreshToken = jwt.sign({ userId: user.id }, process.env.JWT_REFRESH, {
 			expiresIn: "30days",
 		});
-		res.status(200).json({ accessToken, refreshToken });
+		res.status(201).json({ accessToken, refreshToken });
 	});
 });
 
