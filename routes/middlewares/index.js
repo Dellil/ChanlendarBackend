@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 
 const jwtVerify = (req, res, next) => {
 	const token = req.headers["authorization"];
+	if (!token) {
+		return res.status(401).json({ message: "There isn't have authorization in header" });
+	}
 	const accessToken = token.split(" ")[1];
 
 	jwt.verify(accessToken, process.env.JWT_ACCESS, (err, decoded) => {

@@ -8,6 +8,7 @@ const db = require("./models");
 const dotenv = require("dotenv");
 
 const userRouter = require("./routes/user");
+const topicRouter = require("./routes/topic");
 const jwtRouter = require("./routes/jwt");
 
 dotenv.config();
@@ -37,8 +38,8 @@ app.get("/", (req, res) => {
 	res.send("Backend server for Chanlendar");
 });
 
-// app.use("/topic")
 app.use("/user", userRouter);
+app.use("/topic", topicRouter);
 app.use("/jwt", jwtRouter);
 
 app.listen(3065, () => {
