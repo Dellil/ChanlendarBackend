@@ -7,5 +7,5 @@
 CheckList
 
 -   [x] JWT
--   [ ] Topic
+-   [x] Topic
 -   [ ] Task
