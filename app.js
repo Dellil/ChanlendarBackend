@@ -1,3 +1,4 @@
+process.env.TZ = "Asia/Seoul";
 const express = require("express");
 
 const cors = require("cors");
@@ -10,6 +11,7 @@ const dotenv = require("dotenv");
 const userRouter = require("./routes/user");
 const topicRouter = require("./routes/topic/topic");
 const topicsRouter = require("./routes/topic/topics");
+const taskRouter = require("./routes/task/task");
 const jwtRouter = require("./routes/jwt");
 
 dotenv.config();
@@ -42,6 +44,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter);
 app.use("/topic", topicRouter);
 app.use("/topics", topicsRouter);
+app.use("/task", taskRouter);
 app.use("/jwt", jwtRouter);
 
 app.listen(3065, () => {
