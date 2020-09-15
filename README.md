@@ -8,4 +8,4 @@ CheckList
 
 -   [x] JWT
 -   [x] Topic
--   [ ] Task
+-   [x] Task
