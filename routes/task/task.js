@@ -1,10 +1,13 @@
 const express = require("express");
+const router = express.Router();
 
 const { jwtVerify } = require("../middlewares");
 const { Task } = require("../../models");
+const idRouter = require("./id");
 
-const router = express.Router();
+router.use("/", idRouter);
 
+// POST /task (topicId, title, taskDate)
 router.post("/", jwtVerify, async (req, res, next) => {
 	try {
 		const task = await Task.create({
@@ -15,7 +18,12 @@ router.post("/", jwtVerify, async (req, res, next) => {
 		});
 
 		res.status(201).json({
-			data: task
+			data: {
+				topicId: task.TopicId,
+				title: task.title,
+				taskDate: task.taskDate,
+				isFinished: false,
+			},
 		});
 	} catch (error) {
 		next(error);
