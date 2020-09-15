@@ -1,7 +1,7 @@
 const express = require("express");
 
 const { jwtVerify } = require("../middlewares");
-const { Topic } = require("../../models");
+const { Topic, Task } = require("../../models");
 
 const router = express.Router();
 
@@ -15,6 +15,7 @@ router.get("/", jwtVerify, async (req, res, next) => {
 			attributes: {
 				exclude: ["createdAt", "updatedAt"],
 			},
+			include: Task,
 			order: [["id", "ASC"]],
 		});
 
