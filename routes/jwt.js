@@ -14,4 +14,6 @@ router.post("/accessToken", (req, res, next) => {
 	});
 });
 
+router.post("/tokens", (req, res, next) => {});
+
 module.exports = router;
