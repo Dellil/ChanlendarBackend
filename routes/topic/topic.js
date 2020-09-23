@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { jwtVerify } = require("../middlewares");
-const { Topic } = require("../../models");
+const { Topic, Task } = require("../../models");
 const idRouter = require("./id");
 
 router.use("/", idRouter);
@@ -15,12 +15,12 @@ router.post("/", jwtVerify, async (req, res, next) => {
 			UserId: req.user.id,
 		});
 
-		res.status(201).json({
-			data: {
-				id: topic.id,
-				title: topic.title,
-			},
+		const fullTopic = await Topic.findOne({
+			where: { id: topic.id },
+			include: Task,
 		});
+
+		res.status(201).json(fullTopic);
 	} catch (error) {
 		next(error);
 		res.status(500).json({ message: "can't return data" });
