@@ -18,8 +18,9 @@ router.post("/", jwtVerify, async (req, res, next) => {
 		});
 
 		res.status(201).json({
-			data: {
-				topicId: task.TopicId,
+			topicId: task.TopicId,
+			task: {
+				id: task.id,
 				title: task.title,
 				taskDate: task.taskDate,
 				isFinished: false,
