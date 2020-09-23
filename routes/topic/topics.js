@@ -19,7 +19,7 @@ router.get("/", jwtVerify, async (req, res, next) => {
 			order: [["id", "ASC"]],
 		});
 
-		res.status(200).json({ data: topics });
+		res.status(200).json({ topics });
 	} catch (error) {
 		next(error);
 		res.status(500).json({ message: "can't return data" });
