@@ -5,29 +5,29 @@ const { User } = require("../models");
 const router = express.Router();
 
 // POST /user (name, email, password)
-router.post("/", async (req, res, next) => {
-	try {
-		const existedUser = await User.findOne({
-			where: {
-				email: req.body.email,
-			},
-		});
-		if (existedUser) {
-			return res.status(403).json({ message: "이미 사용중인 아이디입니다." });
-		}
-
-		const hashedPassword = await bcrypt.hash(req.body.password, 12);
-
-		await User.create({
-			email: req.body.email,
-			nickname: req.body.nickname,
-			password: hashedPassword,
-		});
-		res.status(201).json({ message: "성공적으로 생성됐습니다." });
-	} catch (error) {
-		next(error);
-	}
-});
+// router.post("/", async (req, res, next) => {
+// 	try {
+// 		const existedUser = await User.findOne({
+// 			where: {
+// 				email: req.body.email,
+// 			},
+// 		});
+// 		if (existedUser) {
+// 			return res.status(403).json({ message: "이미 사용중인 아이디입니다." });
+// 		}
+//
+// 		const hashedPassword = await bcrypt.hash(req.body.password, 12);
+//
+// 		await User.create({
+// 			email: req.body.email,
+// 			nickname: req.body.nickname,
+// 			password: hashedPassword,
+// 		});
+// 		res.status(201).json({ message: "성공적으로 생성됐습니다." });
+// 	} catch (error) {
+// 		next(error);
+// 	}
+// });
 
 // POST /user/login (email, password)
 router.post("/login", async (req, res, next) => {
